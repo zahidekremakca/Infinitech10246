@@ -323,15 +323,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     // Robotu otonomun başlangıç noktasına ışınlayan metod
+    // Robotu otonomun başlangıç noktasına ışınlayan metod
     public void resetPose(Pose2d pose) {
-    // Motorları güvenli bir şekilde durdur
-    this.setControl(new SwerveRequest.SwerveDriveBrake());
-    
-    // Rotation2d nesnesini doğrudan gönderiyoruz
-    this.resetRotation(pose.getRotation());
-    
-    // Not: Eğer robot hala tam olarak doğru koordinata (X, Y) zıplamazsa 
-    // TunerConstants içindeki ana sınıfında 'seedFieldRelative' metodunu kontrol etmeliyiz.
+        // Motorları güvenli bir şekilde durdur
+        this.setControl(new SwerveRequest.SwerveDriveBrake());
+        
+        // CTRE'nin ana sınıfındaki (SwerveDrivetrain) orijinal resetPose metodunu çağırıyoruz.
+        // Bu satır hem X, Y koordinatlarını hem de Rotation2d açısını sahaya tam olarak eşitler.
+        super.resetPose(pose);
     }
 
     public void configurePathPlanner() {

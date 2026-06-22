@@ -164,21 +164,8 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        // PathPlanner seçimini devre dışı bırakıp özel sıralı otonomu tanımlıyoruz
-        return Commands.sequence(
-            // 1. Adım: 1 metre ileri git (1.0 m/s hızla 1.0 saniye sürer)
-            drivetrain.applyRequest(() -> 
-                drive.withVelocityX(4.5) 
-                     .withVelocityY(0)
-                     .withRotationalRate(0)
-            ).withTimeout(20)
-
-            // 2. Adım: 2 saniye boyunca Limelight kullanarak hedefe yönel (Hizalanma)
-           
-
-            // 3. Adım: 15 saniye boyunca otomatik hedefleme ve atış komutunu çalıştır
-            
-        );
+        // SmartDashboard/Shuffleboard üzerinden seçtiğin PathPlanner otonomunu döndürür
+        return autoChooser.getSelected();
     }
 
      double limelight_aim_proportional()

@@ -15,8 +15,8 @@ import frc.robot.generated.TunerConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
     // Motorlar TunerConstants içindeki "CANivore" ismiyle tanımlanan hatta bağlanır
-    private final TalonFX shooterMotor = new TalonFX(10, TunerConstants.kCANBus.getName());
-    private final TalonFX feederMotor = new TalonFX(9, TunerConstants.kCANBus.getName());
+    private final TalonFX shooterMotor = new TalonFX(10, TunerConstants.kCANBus);
+private final TalonFX feederMotor = new TalonFX(9, TunerConstants.kCANBus);
 
     // 5000 RPM'i Rotations Per Second'a (RPS) çeviriyoruz: 5000 / 60 ≈ 83.3 RPS
     private double m_defaultTargetRPS = 4500.0 / 60.0;
