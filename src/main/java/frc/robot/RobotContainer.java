@@ -136,9 +136,25 @@ public class RobotContainer {
         ));
 
 
-        
+        joystick.rightBumper().whileTrue(new AutoAimAndShootCommand(drivetrain, m_shooter));
+
+        joystick.rightTrigger().whileTrue(
+            drivetrain.applyRequest(() ->
+            drive.withVelocityX(-joystick.getLeftY() * MaxSpeed)
+                .withVelocityY(-joystick.getLeftX() * MaxSpeed)
+                .withRotationalRate(limelight_aim_proportional())
+            )
+        );
         //humanfeeder
+        joystick.y().whileTrue(m_shooter.humanfeederCommand());
         // Sol tetiğe basılı tutunca shooter ve feeder'ı geri döndür
+        joystick.leftTrigger().toggleOnTrue(
+            m_shooter.feederSequenceCommand().finallyDo(() -> m_shooter.feederStop())
+
+        );      
+        // Sol tetiğe basılı tutunca shooter ve feeder'ı geri döndür
+          //tersshooter
+        joystick.x().whileTrue(m_shooter.reverseShooterCommand()); 
           
          //tersshooter
         // Otomatik hedefleme ve mesafeye göre atış
