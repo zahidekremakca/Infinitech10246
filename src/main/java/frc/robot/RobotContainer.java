@@ -156,8 +156,7 @@ public class RobotContainer {
           //tersshooter
         joystick.x().whileTrue(m_shooter.reverseShooterCommand()); 
           
-         //tersshooter
-        // Otomatik hedefleme ve mesafeye göre atış
+        
         
 
         // Run SysId routines when holding back/start and X/Y.
