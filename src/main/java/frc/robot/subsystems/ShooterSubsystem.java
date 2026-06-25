@@ -28,7 +28,7 @@ private final TalonFX feederMotor = new TalonFX(9, TunerConstants.kCANBus);
         TalonFXConfiguration feederConfigs = new TalonFXConfiguration();
 
         // Shooter Ayarları
-        shooterConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        shooterConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         shooterConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         
         // Shooter Akım ve Voltaj Ayarları
@@ -49,7 +49,7 @@ private final TalonFX feederMotor = new TalonFX(9, TunerConstants.kCANBus);
         shooterConfigs.Slot0.kV = 0.011; // 0.115'den 0.011'e düzeltildi (Hız kontrolü için kritik)
 
         // Feeder Ayarları (Shooter'ın zıttı yöne dönecek şekilde ayarlandı)
-        feederConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        feederConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         feederConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         // Feeder Akım Ayarları (Sıkışma durumunda motoru korumak için daha düşük limit)
@@ -140,17 +140,7 @@ private final TalonFX feederMotor = new TalonFX(9, TunerConstants.kCANBus);
     }
     
 
-    //otonom komutları 
-    // Otonom için akıllı atış komutu
-    public Command shooterAc() {
-        // 'run' komutu, Deadline Group içindeki süre bitene kadar her 20ms'de bir çalışır
-        return run(() -> {
-            runShooterWithRPM(m_defaultTargetRPS * 60.0);
-        }).finallyDo((interrupted) -> {
-            // Komut bittiğinde veya otonom süresi dolduğunda motorları durdur
-            shooterKapat();
-        });
-    }
+    
 
     public void shooterKapat() {
         // motor.set(0);
@@ -159,12 +149,7 @@ private final TalonFX feederMotor = new TalonFX(9, TunerConstants.kCANBus);
 
     }
 
-    // PathPlanner'da kullanacağın komut halleri:
-    public Command shooterAcKomutu() {
-        // Otonomda komutun bir noktada bitmesi için süre sınırı ekliyoruz (Örn: 3 saniye)
-        return shooterAc();
-    }
-
+   
     public Command shooterKapatKomutu() {
         return new InstantCommand(() -> this.shooterKapat(), this);
     }
