@@ -86,8 +86,9 @@ private final TalonFX feederMotor = new TalonFX(9, TunerConstants.kCANBus);
         double targetRPS = targetRPM / 60.0;
         shooterMotor.setControl(new VelocityDutyCycle(targetRPS));
 
-        // Shooter hızı hedef hıza ulaştıysa (tolerans dahilinde) feeder'ı çalıştır
-        if (shooterMotor.getVelocity().getValueAsDouble() >= (targetRPS - kShooterTolerance)) {
+        double currentRPS = shooterMotor.getVelocity().getValueAsDouble();
+    
+        if (Math.abs(currentRPS) >= Math.abs(targetRPS) - kShooterTolerance) {
             feederMotor.setControl(new DutyCycleOut(0.6));
         } else {
             feederMotor.setControl(new DutyCycleOut(0));
